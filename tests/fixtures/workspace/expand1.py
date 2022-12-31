@@ -1,4 +1,5 @@
 import os
+from typing import Dict, List, Union
 
 before_workspace = {
     "session_name": "sample workspace",
@@ -30,7 +31,22 @@ before_workspace = {
 }
 
 
-def after_workspace():
+def after_workspace() -> Dict[
+    str,
+    Union[
+        str,
+        List[
+            Union[
+                Dict[str, Union[str, List[Dict[str, List[Dict[str, str]]]]]],
+                Dict[
+                    str,
+                    Union[str, Dict[str, bool], List[Dict[str, List[Dict[str, str]]]]],
+                ],
+                Dict[str, List[Dict[str, List[Dict[str, str]]]]],
+            ]
+        ],
+    ],
+]:
     return {
         "session_name": "sample workspace",
         "start_directory": os.path.expanduser("~"),

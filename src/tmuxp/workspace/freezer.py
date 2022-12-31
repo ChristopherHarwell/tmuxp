@@ -1,9 +1,11 @@
+import typing as t
+from typing import Any, Dict
+
 from libtmux.pane import Pane
 from libtmux.session import Session
-import typing as t
 
 
-def inline(workspace_dict):
+def inline(workspace_dict: Dict[str, Any]) -> Any:
     """Return workspace with inlined shorthands. Opposite of :meth:`loader.expand`.
 
     Parameters

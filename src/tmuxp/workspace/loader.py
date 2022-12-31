@@ -6,12 +6,13 @@ tmuxp.workspace.loader
 """
 import logging
 import os
-from typing import Dict
+from pathlib import PosixPath
+from typing import Any, Dict, Optional, Union
 
 logger = logging.getLogger(__name__)
 
 
-def expandshell(_path):
+def expandshell(_path: str) -> str:
     """
     Return expanded path based on user's ``$HOME`` and ``env``.
 
@@ -63,7 +64,11 @@ def expand_cmd(p: Dict) -> Dict:
     return p
 
 
-def expand(workspace_dict, cwd=None, parent=None):
+def expand(
+    workspace_dict: Dict[str, Any],
+    cwd: Optional[Union[PosixPath, str]] = None,
+    parent: Optional[Any] = None,
+) -> Dict[str, Any]:
     """Return workspace with shorthand and inline properties expanded.
 
     This is necessary to keep the code in the :class:`WorkspaceBuilder` clean
@@ -183,7 +188,7 @@ def expand(workspace_dict, cwd=None, parent=None):
     return workspace_dict
 
 
-def trickle(workspace_dict):
+def trickle(workspace_dict: Dict[str, Any]) -> Dict[str, Any]:
     """Return a dict with "trickled down" / inherited workspace values.
 
     This will only work if workspace has been expanded to full form with

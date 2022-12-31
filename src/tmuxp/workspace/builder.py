@@ -7,6 +7,7 @@ tmuxp.workspace.builder
 import logging
 import time
 import typing as t
+from typing import Any, Dict, Iterator, List, Optional
 
 from libtmux._internal.query_list import ObjectDoesNotExist
 from libtmux.common import has_gte_version, has_lt_version
@@ -186,7 +187,7 @@ class WorkspaceBuilder:
                 pass
 
     @property
-    def session(self):
+    def session(self) -> Session:
         if self._session is None:
             raise ObjectDoesNotExist(
                 "No session object exists for WorkspaceBuilder. "
