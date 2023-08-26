@@ -16,6 +16,7 @@ import typing as t
 from libtmux.common import has_gte_version
 from libtmux.server import Server
 from libtmux.session import Session
+
 from tmuxp.types import StrPath
 
 from .. import config_reader, exc, log, util
@@ -91,9 +92,7 @@ def set_layout_hook(session: Session, hook_name: str) -> None:
 
     # unset the hook immediately after executing
     hook_cmd.append(
-        "set-hook -u -t {target_session} {hook_name}".format(
-            target_session=session.id, hook_name=hook_name
-        )
+        f"set-hook -u -t {session.id} {hook_name}"
     )
     hook_cmd.append(f"selectw -t {attached_window.id}")
 
@@ -122,8 +121,7 @@ def load_plugins(session_config: t.Dict[str, t.Any]) -> t.List[t.Any]:
                 plugins.append(plugin())
             except exc.TmuxpPluginException as error:
                 if not prompt_yes_no(
-                    "%sSkip loading %s?"
-                    % (style(str(error), fg="yellow"), plugin_name),
+                    "{}Skip loading {}?".format(style(str(error), fg="yellow"), plugin_name),
                     default=True,
                 ):
                     tmuxp_echo(
